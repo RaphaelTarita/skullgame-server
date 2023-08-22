@@ -17,7 +17,7 @@ group = "com.rtarita"
 version = "1.0.0-SNAPSHOT"
 
 application {
-    mainClass.set("com.rtarita.skullgame.ApplicationKt")
+    mainClass.set("com.rtarita.skull.server.ApplicationKt")
 }
 
 repositories {
