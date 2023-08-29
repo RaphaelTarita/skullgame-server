@@ -14,6 +14,6 @@ internal fun Application.initCors() {
         allowMethod(HttpMethod.Options)
         allowHeader(HttpHeaders.Authorization)
         allowHeader(HttpHeaders.ContentType)
-        allowHost(subdomains.first(), listOf("https"), subdomains.drop(1))
+        allowHost(subdomains.take(2).joinToString("."), listOf("https"), subdomains.drop(2))
     }
 }
