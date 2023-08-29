@@ -124,12 +124,15 @@ The configuration file for the SkullGame Server has the following structure:
     },
     ...
   ],
+  "environment": {
+    "host": "<some host>",
+    "subdomain": "<some subdomain>",
+    "port": 8443,
+    "maxManagerThreads": 4
+  },
   "features": {
     "reverseProxy": false,
     "autoHeadResponse": true
-  },
-  "environment": {
-    "maxManagerThreads": 4
   }
 }
 ```
@@ -146,14 +149,16 @@ Explanation:
 - `users[].displayName`: the users' display name
 - `users[].passHash`: the SHA-256 hash (hexadecimal, lowercase) of the users' password
 - `users[].admin` (default: `false`): whether the user has admin rights or not
+- `environment.host`: The host domain on which the server is running
+- `environment.port` (default: `8443`): The port on which the server should listen
+- `environment.maxManagerThreads` (default: `4`): The maximum number of threads that will be allocated specifically to
+  games management. The actual number of threads will be at most this number, but capped by the number of logical
+  processors of the machine
 - `features.reverseProxy` (default: `false`): set this to `true` if you're running your server behind a reverse proxy
   (it will cause IPs to be resolved correctly for logging and similar stuff). If you don't run the server behind a
   reverse proxy, **set this to `false`**!
 - `features.autoHeadResponse` (default: `true`): Whether the server should automatically answer `HEAD` requests for its
   endpoints
-- `environment.maxManagerThreads` (default: `4`): The maximum number of threads that will be allocated specifically to
-  games management. The actual number of threads will be at most this number, but capped by the number of logical
-  processors of the machine
 
 Once you have configured all these settings and put them in `server-config/config.json`, you are ready to run the
 server!

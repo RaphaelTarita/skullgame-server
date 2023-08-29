@@ -1,6 +1,7 @@
 package com.rtarita.skull.server
 
 import com.rtarita.skull.server.auth.AuthStore
+import com.rtarita.skull.server.config.ConfigProvider
 import com.rtarita.skull.server.core.game.GamesManager
 import com.rtarita.skull.server.endpoints.initAutoHeadResponse
 import com.rtarita.skull.server.endpoints.initCallLogging
@@ -17,8 +18,12 @@ import io.ktor.server.engine.embeddedServer
 
 
 fun main() {
-    embeddedServer(CIO, port = 8080, host = "0.0.0.0", module = Application::module)
-        .start(wait = true)
+    embeddedServer(
+        CIO,
+        port = ConfigProvider.envPort,
+        host = "0.0.0.0",
+        module = Application::module
+    ).start(wait = true)
     GamesManager.deactivate()
 }
 

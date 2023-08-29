@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 internal data class Config(
     val auth: AuthConfig,
     val users: List<User>,
+    val environment: EnvironmentConfig,
     val features: FeaturesConfig = FeaturesConfig(),
-    val environment: EnvironmentConfig = EnvironmentConfig()
 )

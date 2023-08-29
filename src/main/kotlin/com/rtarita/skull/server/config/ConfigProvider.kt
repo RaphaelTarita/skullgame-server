@@ -28,12 +28,18 @@ object ConfigProvider {
     val users: List<User>
         get() = deserializedConfig.users
 
+    val envHost: String
+        get() = deserializedConfig.environment.host
+
+    val envPort: Int
+        get() = deserializedConfig.environment.port
+
+    val envMaxManagerThreads: Int
+        get() = deserializedConfig.environment.maxManagerThreads
+
     val featReverseProxy: Boolean
         get() = deserializedConfig.features.reverseProxy
 
     val featAutoHeadResponse: Boolean
         get() = deserializedConfig.features.autoHeadResponse
-
-    val envMaxManagerThreads: Int
-        get() = deserializedConfig.environment.maxManagerThreads
 }
