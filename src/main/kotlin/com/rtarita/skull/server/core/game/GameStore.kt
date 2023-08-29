@@ -1,6 +1,7 @@
 package com.rtarita.skull.server.core.game
 
 import com.rtarita.skull.common.BadMove
+import com.rtarita.skull.common.GameEnded
 import com.rtarita.skull.common.GameState
 import com.rtarita.skull.common.Move
 import com.rtarita.skull.common.MoveOutcome
@@ -60,7 +61,11 @@ internal class GameStore {
         val playerIndex = game.getPlayerIndex(player) ?: return BadMove("user with ID '${player.id}' is not part of this game")
 
         game.updateLastInteraction()
-        return controller.tickGame(playerIndex, move)
+        val outcome = controller.tickGame(playerIndex, move)
+        if (outcome is GameEnded) {
+            game.mutex.withLock { removeGame(gameid, game) }
+        }
+        return outcome
     }
 
     fun getMasterState(gameid: String): GameState? {
@@ -82,11 +87,15 @@ internal class GameStore {
             game.mutex.withLock {
                 if (Clock.System.now() - game.lastInteraction > ServerConstants.gameExpiration) {
                     logger.info("removing game ${game.gameid} due to inactivity")
-                    game.signalRemove()
-                    games.remove(id)
-                    controllers.remove(id)
+                    removeGame(id, game)
                 }
             }
         }
+    }
+
+    private suspend fun removeGame(id: String, game: Game) {
+        game.signalRemove()
+        games.remove(id)
+        controllers.remove(id)
     }
 }
