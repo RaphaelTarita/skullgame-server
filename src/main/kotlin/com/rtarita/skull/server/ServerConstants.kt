@@ -17,7 +17,14 @@ internal object ServerConstants {
     val certsPath = Path("$CONFIG_DIR/certs")
     val jwksPath = Path("$CONFIG_DIR/certs/jwks.json")
 
+    const val JWKP_CACHE_SIZE = 8L
+    const val JWKP_CACHE_EXPIRATION_HOURS = 12L
+    const val JWKP_RATELIMIT_BUCKET_SIZE = 10L
+    const val JWKP_RATELIMIT_REFILL_RATE_MINUTES = 1L
+    const val JWKP_VERIFY_LEEWAY_SECONDS = 3L
+
     val tokenExpiration: JDuration = JDuration.of(2, ChronoUnit.HOURS)
     val gameExpiration = with(KDuration) { 15.minutes }
     val gameExpirationUpdate = with(KDuration) { 5.minutes }
+    const val GAME_ID_LENGTH = 8
 }

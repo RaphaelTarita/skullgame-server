@@ -4,6 +4,7 @@ import com.rtarita.skull.common.GameState
 import com.rtarita.skull.common.Move
 import com.rtarita.skull.common.MoveOutcome
 import com.rtarita.skull.common.PlayerGameState
+import com.rtarita.skull.server.config.ConfigProvider
 import com.rtarita.skull.server.config.User
 import com.rtarita.skull.server.core.state.GlobalState
 import kotlinx.coroutines.CoroutineScope
@@ -14,7 +15,9 @@ import java.util.concurrent.Executors
 import kotlin.math.min
 
 internal object GamesManager {
-    private val threadpool by lazy { Executors.newFixedThreadPool(min(4, Runtime.getRuntime().availableProcessors())) }
+    private val threadpool by lazy {
+        Executors.newFixedThreadPool(min(ConfigProvider.envMaxManagerThreads, Runtime.getRuntime().availableProcessors()))
+    }
     private val coroutineScope by lazy { CoroutineScope(threadpool.asCoroutineDispatcher()) }
 
     fun activate() {

@@ -127,6 +127,9 @@ The configuration file for the SkullGame Server has the following structure:
   "features": {
     "reverseProxy": false,
     "autoHeadResponse": true
+  },
+  "environment": {
+    "maxManagerThreads": 4
   }
 }
 ```
@@ -142,11 +145,15 @@ Explanation:
 - `users[].id`: unique user ID that is used for logging in
 - `users[].displayName`: the users' display name
 - `users[].passHash`: the SHA-256 hash (hexadecimal, lowercase) of the users' password
-- `users[].admin`: whether the user has admin rights or not
-- `features.reverseProxy`: set this to `true` if you're running your server behind a reverse proxy (it will cause IPs to
-  be resolved correctly for logging and similar stuff). If you don't run the server behind a reverse proxy, **set this
-  to `false`**!
-- `features.autoHeadResponse`: Whether the server should automatically answer `HEAD` requests for its endpoints
+- `users[].admin` (default: `false`): whether the user has admin rights or not
+- `features.reverseProxy` (default: `false`): set this to `true` if you're running your server behind a reverse proxy
+  (it will cause IPs to be resolved correctly for logging and similar stuff). If you don't run the server behind a
+  reverse proxy, **set this to `false`**!
+- `features.autoHeadResponse` (default: `true`): Whether the server should automatically answer `HEAD` requests for its
+  endpoints
+- `environment.maxManagerThreads` (default: `4`): The maximum number of threads that will be allocated specifically to
+  games management. The actual number of threads will be at most this number, but capped by the number of logical
+  processors of the machine
 
 Once you have configured all these settings and put them in `server-config/config.json`, you are ready to run the
 server!

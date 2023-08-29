@@ -33,4 +33,7 @@ object ConfigProvider {
 
     val featAutoHeadResponse: Boolean
         get() = deserializedConfig.features.autoHeadResponse
+
+    val envMaxManagerThreads: Int
+        get() = deserializedConfig.environment.maxManagerThreads
 }

@@ -36,7 +36,7 @@ internal class GameStore {
     suspend fun newGame(initiator: User): String = gamesMutex.withLock {
         var gameid: String
         do {
-            gameid = getRandomAlphanumString(random, 8)
+            gameid = getRandomAlphanumString(random, ServerConstants.GAME_ID_LENGTH)
         } while (games.containsKey(gameid))
         games[gameid] = Game(gameid, initiator)
         gameid

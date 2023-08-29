@@ -2,6 +2,7 @@ package com.rtarita.skull.server.auth
 
 import com.auth0.jwk.JwkProvider
 import com.auth0.jwk.JwkProviderBuilder
+import com.rtarita.skull.server.ServerConstants
 import com.rtarita.skull.server.config.ConfigProvider
 import com.rtarita.skull.server.config.User
 import java.util.concurrent.TimeUnit
@@ -15,8 +16,8 @@ internal class AuthStore(
 ) {
     val jwkProvider: JwkProvider by lazy {
         JwkProviderBuilder(issuer)
-            .cached(8L, 12, TimeUnit.HOURS)
-            .rateLimited(10, 1, TimeUnit.MINUTES)
+            .cached(ServerConstants.JWKP_CACHE_SIZE, ServerConstants.JWKP_CACHE_EXPIRATION_HOURS, TimeUnit.HOURS)
+            .rateLimited(ServerConstants.JWKP_RATELIMIT_BUCKET_SIZE, ServerConstants.JWKP_RATELIMIT_REFILL_RATE_MINUTES, TimeUnit.MINUTES)
             .build()
     }
 
