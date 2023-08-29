@@ -34,10 +34,10 @@ there is one exception: `com.rtarita.skull:skullgame-common` contains common cod
 client. You can find the [repository on GitHub](https://github.com/RaphaelTarita/skullgame-common) as well, but there
 are no published packages of it, which means you have to build it yourself.
 
-Another important thing to note is that the server expects a `config` directory in the same folder as it is run in. This
-directory has to contain the following files:
+Another important thing to note is that the server expects a `server-config` directory in the same folder as it is run
+in. This directory has to contain the following files:
 
-- `/certs/jwks.json`: JWK Set, see 'Configuration' for details on how to generate
+- `certs/jwks.json`: JWK Set, see 'Configuration' for details on how to generate
 - `config.json`: general-purpose configurations for the server, see 'Configuration' for detailed info
 - `id_rsa`: Matching private key to `jwks.json`.
 
@@ -45,7 +45,7 @@ Ultimately, this means you have to progress through the following steps to build
 
 1. Clone [skullgame-common](https://github.com/RaphaelTarita/skullgame-common)
 2. Follow the instructions from its README to build it and install it into the local maven repository
-3. Create a new directory called `config` directly below the root directory of this project
+3. Create a new directory called `server-config` directly below the root directory of this project
 4. Fill that directory with the files mentioned above (see 'Configuration' for more info)
 5. Invoke `gradlew run` / `gradlew.bat run` in a terminal
 
@@ -101,7 +101,7 @@ arbitrary user spoofing. **READ THE STEPS BELOW CAREFULLY TO AVOID THIS**
     ```
     If your file contains any other properties than the ones in this example, **REMOVE THEM**.
 
-This is all you have to do for your `config/id_rsa` and `config/certs/jwks.json` files.
+This is all you have to do for your `server-config/id_rsa` and `server-config/certs/jwks.json` files.
 
 #### `config.json`:
 
@@ -148,4 +148,5 @@ Explanation:
   to `false`**!
 - `features.autoHeadResponse`: Whether the server should automatically answer `HEAD` requests for its endpoints
 
-Once you have configured all these settings and put them in `config/config.json`, you are ready to run the server!
+Once you have configured all these settings and put them in `server-config/config.json`, you are ready to run the
+server!

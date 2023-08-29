@@ -11,10 +11,11 @@ internal object ServerConstants {
     val b64decoder: Base64.Decoder = Base64.getDecoder()
     val rsaKeyFactory: KeyFactory = KeyFactory.getInstance("RSA")
 
-    val configfilePath = Path("config/config.json")
-    val privatekeyPath = Path("config/id_rsa")
-    val certsPath = Path("config/certs")
-    val jwksPath = Path("config/certs/jwks.json")
+    const val CONFIG_DIR = "server-config"
+    val configfilePath = Path("$CONFIG_DIR/config.json")
+    val privatekeyPath = Path("$CONFIG_DIR/id_rsa")
+    val certsPath = Path("$CONFIG_DIR/certs")
+    val jwksPath = Path("$CONFIG_DIR/certs/jwks.json")
 
     val tokenExpiration: JDuration = JDuration.of(2, ChronoUnit.HOURS)
     val gameExpiration = with(KDuration) { 15.minutes }
