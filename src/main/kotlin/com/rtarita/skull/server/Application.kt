@@ -12,6 +12,7 @@ import com.rtarita.skull.server.endpoints.initForwardedHeaders
 import com.rtarita.skull.server.endpoints.initJwt
 import com.rtarita.skull.server.endpoints.initRouting
 import com.rtarita.skull.server.endpoints.initStatusPages
+import com.rtarita.skull.server.endpoints.initWebSockets
 import io.ktor.server.application.Application
 import io.ktor.server.cio.CIO
 import io.ktor.server.engine.embeddedServer
@@ -44,6 +45,7 @@ private fun Application.initPlugins(): AuthStore {
     initAutoHeadResponse()
     initStatusPages()
     initContentNegotiation()
+    initWebSockets()
 
     return authStore
 }

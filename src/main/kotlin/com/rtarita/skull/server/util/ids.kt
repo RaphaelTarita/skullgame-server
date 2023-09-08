@@ -1,4 +1,4 @@
-package com.rtarita.skull.server.core.util
+package com.rtarita.skull.server.util
 
 import kotlin.random.Random
 

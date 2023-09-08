@@ -9,6 +9,7 @@ import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
+import io.ktor.server.websocket.webSocket
 import kotlin.io.path.Path
 
 internal fun Application.initRouting(authStore: AuthStore) = routing {
@@ -24,6 +25,10 @@ private fun Routing.publicRoutes(authStore: AuthStore) {
 }
 
 private fun Routing.authenticatedRoutes(authStore: AuthStore) = authenticate("auth-jwt") {
+    webSocket("/subscribe") {
+        handleWebSocketSubscribe(authStore)
+    }
+
     get("/hello") {
         handleHello(authStore)
     }

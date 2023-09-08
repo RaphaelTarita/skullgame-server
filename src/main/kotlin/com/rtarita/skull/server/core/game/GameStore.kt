@@ -6,12 +6,17 @@ import com.rtarita.skull.common.GameState
 import com.rtarita.skull.common.Move
 import com.rtarita.skull.common.MoveOutcome
 import com.rtarita.skull.common.PlayerGameState
+import com.rtarita.skull.common.StateSignal
 import com.rtarita.skull.server.ServerConstants
 import com.rtarita.skull.server.config.User
 import com.rtarita.skull.server.core.state.GlobalState
-import com.rtarita.skull.server.core.util.getRandomAlphanumString
+import com.rtarita.skull.server.util.getRandomAlphanumString
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
@@ -25,7 +30,21 @@ internal class GameStore {
     private val random = SecureRandom().asKotlinRandom()
     private val gamesMutex = Mutex()
     private val games = ConcurrentHashMap<String, Game>()
+    private val signalFlows = ConcurrentHashMap<String, MutableSharedFlow<StateSignal.Server>>()
     private val controllers = ConcurrentHashMap<String, GameController>()
+
+    private suspend fun signalStart(gameid: String) {
+        signalFlows[gameid]?.emit(StateSignal.Server.GameStart(gameid))
+    }
+
+    private suspend fun signalUpdate(gameid: String) {
+        signalFlows[gameid]?.emit(StateSignal.Server.GameUpdate(gameid))
+    }
+
+    private suspend fun signalEnded(gameid: String) {
+        val flow = signalFlows.remove(gameid)
+        flow?.emit(StateSignal.Server.GameEnded(gameid))
+    }
 
     suspend fun scheduleCleanups() = coroutineScope {
         while (GlobalState.active) {
@@ -40,6 +59,11 @@ internal class GameStore {
             gameid = getRandomAlphanumString(random, ServerConstants.GAME_ID_LENGTH)
         } while (games.containsKey(gameid))
         games[gameid] = Game(gameid, initiator)
+        signalFlows[gameid] = MutableSharedFlow(
+            replay = 0,
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST
+        )
         gameid
     }
 
@@ -52,6 +76,7 @@ internal class GameStore {
         val game = games[gameid] ?: return false
         if (!game.isInitiator(player)) return false
         controllers[gameid] = game.start() ?: return false
+        signalStart(gameid)
         return true
     }
 
@@ -63,7 +88,9 @@ internal class GameStore {
         game.updateLastInteraction()
         val outcome = controller.tickGame(playerIndex, move)
         if (outcome is GameEnded) {
-            game.mutex.withLock { removeGame(gameid, game) }
+            game.mutex.withLock { removeGame(gameid) }
+        } else {
+            signalUpdate(gameid)
         }
         return outcome
     }
@@ -82,20 +109,22 @@ internal class GameStore {
         return controller.getPlayerGameState(playerIndex)
     }
 
+    fun getSignalFlow(gameid: String): SharedFlow<StateSignal.Server>? = signalFlows[gameid]?.asSharedFlow()
+
     private suspend fun cleanup() {
         for ((id, game) in games) {
             game.mutex.withLock {
                 if (Clock.System.now() - game.lastInteraction > ServerConstants.gameExpiration) {
                     logger.info("removing game ${game.gameid} due to inactivity")
-                    removeGame(id, game)
+                    removeGame(id)
                 }
             }
         }
     }
 
-    private suspend fun removeGame(id: String, game: Game) {
-        game.signalRemove()
+    private suspend fun removeGame(id: String) {
         games.remove(id)
         controllers.remove(id)
+        signalEnded(id)
     }
 }
