@@ -1,6 +1,6 @@
 package com.rtarita.skull.server.core.game
 
-import com.rtarita.skull.common.GameState
+import com.rtarita.skull.common.state.GameState
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 

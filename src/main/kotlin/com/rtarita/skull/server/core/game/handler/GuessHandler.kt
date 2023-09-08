@@ -1,16 +1,16 @@
 package com.rtarita.skull.server.core.game.handler
 
-import com.rtarita.skull.common.BadMove
-import com.rtarita.skull.common.Card
 import com.rtarita.skull.common.CommonConstants
-import com.rtarita.skull.common.Continue
-import com.rtarita.skull.common.GameEnded
-import com.rtarita.skull.common.GameState
-import com.rtarita.skull.common.Guess
-import com.rtarita.skull.common.MoveOutcome
-import com.rtarita.skull.common.RoundEnded
-import com.rtarita.skull.common.RoundOutcome
-import com.rtarita.skull.common.TurnMode
+import com.rtarita.skull.common.moves.BadMove
+import com.rtarita.skull.common.moves.Continue
+import com.rtarita.skull.common.moves.GameEnded
+import com.rtarita.skull.common.moves.Guess
+import com.rtarita.skull.common.moves.MoveOutcome
+import com.rtarita.skull.common.moves.RoundEnded
+import com.rtarita.skull.common.moves.RoundOutcome
+import com.rtarita.skull.common.state.Card
+import com.rtarita.skull.common.state.GameState
+import com.rtarita.skull.common.state.TurnMode
 import com.rtarita.skull.server.util.mutate
 import kotlin.random.Random
 

@@ -1,9 +1,9 @@
 package com.rtarita.skull.server.core.game.handler
 
-import com.rtarita.skull.common.BadMove
-import com.rtarita.skull.common.GameState
-import com.rtarita.skull.common.Move
-import com.rtarita.skull.common.MoveOutcome
+import com.rtarita.skull.common.moves.BadMove
+import com.rtarita.skull.common.moves.Move
+import com.rtarita.skull.common.moves.MoveOutcome
+import com.rtarita.skull.common.state.GameState
 import kotlin.random.Random
 
 interface MoveHandler<T : Move> {

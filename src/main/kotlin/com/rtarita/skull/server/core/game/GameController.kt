@@ -1,13 +1,13 @@
 package com.rtarita.skull.server.core.game
 
-import com.rtarita.skull.common.Bid
-import com.rtarita.skull.common.FirstCard
-import com.rtarita.skull.common.GameState
-import com.rtarita.skull.common.Guess
-import com.rtarita.skull.common.Lay
-import com.rtarita.skull.common.Move
-import com.rtarita.skull.common.MoveOutcome
-import com.rtarita.skull.common.PlayerGameState
+import com.rtarita.skull.common.moves.Bid
+import com.rtarita.skull.common.moves.FirstCard
+import com.rtarita.skull.common.moves.Guess
+import com.rtarita.skull.common.moves.Lay
+import com.rtarita.skull.common.moves.Move
+import com.rtarita.skull.common.moves.MoveOutcome
+import com.rtarita.skull.common.state.GameState
+import com.rtarita.skull.common.state.PlayerGameState
 import com.rtarita.skull.server.core.game.handler.BidHandler
 import com.rtarita.skull.server.core.game.handler.FirstCardHandler
 import com.rtarita.skull.server.core.game.handler.GuessHandler

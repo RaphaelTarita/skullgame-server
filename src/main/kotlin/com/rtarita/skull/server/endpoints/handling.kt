@@ -2,12 +2,12 @@ package com.rtarita.skull.server.endpoints
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.rtarita.skull.common.BadMove
 import com.rtarita.skull.common.CommonConstants
-import com.rtarita.skull.common.LoginCredentials
-import com.rtarita.skull.common.Move
-import com.rtarita.skull.common.StateSignal
-import com.rtarita.skull.common.TokenHolder
+import com.rtarita.skull.common.auth.LoginCredentials
+import com.rtarita.skull.common.auth.TokenHolder
+import com.rtarita.skull.common.moves.BadMove
+import com.rtarita.skull.common.moves.Move
+import com.rtarita.skull.common.state.StateSignal
 import com.rtarita.skull.server.ServerConstants
 import com.rtarita.skull.server.auth.AuthStore
 import com.rtarita.skull.server.auth.receiveUser

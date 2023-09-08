@@ -1,7 +1,7 @@
 package com.rtarita.skull.server.core.game.handler
 
-import com.rtarita.skull.common.Card
-import com.rtarita.skull.common.GameState
+import com.rtarita.skull.common.state.Card
+import com.rtarita.skull.common.state.GameState
 import com.rtarita.skull.server.util.mutate
 
 internal fun layCard(

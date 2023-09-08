@@ -1,11 +1,11 @@
 package com.rtarita.skull.server.core.game.handler
 
-import com.rtarita.skull.common.BadMove
-import com.rtarita.skull.common.Continue
-import com.rtarita.skull.common.GameState
-import com.rtarita.skull.common.Lay
-import com.rtarita.skull.common.MoveOutcome
-import com.rtarita.skull.common.TurnMode
+import com.rtarita.skull.common.moves.BadMove
+import com.rtarita.skull.common.moves.Continue
+import com.rtarita.skull.common.moves.Lay
+import com.rtarita.skull.common.moves.MoveOutcome
+import com.rtarita.skull.common.state.GameState
+import com.rtarita.skull.common.state.TurnMode
 import kotlin.random.Random
 
 object LayHandler : MoveHandler<Lay> {

@@ -1,12 +1,12 @@
 package com.rtarita.skull.server.core.game
 
-import com.rtarita.skull.common.BadMove
-import com.rtarita.skull.common.GameEnded
-import com.rtarita.skull.common.GameState
-import com.rtarita.skull.common.Move
-import com.rtarita.skull.common.MoveOutcome
-import com.rtarita.skull.common.PlayerGameState
-import com.rtarita.skull.common.StateSignal
+import com.rtarita.skull.common.moves.BadMove
+import com.rtarita.skull.common.moves.GameEnded
+import com.rtarita.skull.common.moves.Move
+import com.rtarita.skull.common.moves.MoveOutcome
+import com.rtarita.skull.common.state.GameState
+import com.rtarita.skull.common.state.PlayerGameState
+import com.rtarita.skull.common.state.StateSignal
 import com.rtarita.skull.server.ServerConstants
 import com.rtarita.skull.server.config.User
 import com.rtarita.skull.server.core.state.GlobalState

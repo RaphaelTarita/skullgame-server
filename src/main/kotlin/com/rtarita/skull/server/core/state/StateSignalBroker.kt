@@ -1,11 +1,11 @@
 package com.rtarita.skull.server.core.state
 
-import com.rtarita.skull.common.StateSignal
 import com.rtarita.skull.common.condition.RendezvousSignalCondition
 import com.rtarita.skull.common.condition.dsl.Wait
 import com.rtarita.skull.common.condition.dsl.happens
 import com.rtarita.skull.common.condition.dsl.until
 import com.rtarita.skull.common.condition.rendezvousSignalCondition
+import com.rtarita.skull.common.state.StateSignal
 import com.rtarita.skull.server.config.User
 import com.rtarita.skull.server.core.game.GamesManager
 import kotlinx.coroutines.flow.Flow
