@@ -57,11 +57,10 @@ JWK needs a private/public keypair to create and sign the tokens that are used f
 However, the public key needs to be in a special JSON format. In order to obtain a (correctly formatted) keypair, you
 can use [mkjwk](https://mkjwk.org/).
 
-# !!!WARNING!!!
-
-mkjwk will generate a `jwks.json` file that **also contains the private key**! If you leave the
-private key in the file, it will be published by your server, completely exposing every single endpoint and allowing
-arbitrary user spoofing. **READ THE STEPS BELOW CAREFULLY TO AVOID THIS**
+> [!CAUTION]
+> mkjwk will generate a `jwks.json` file that **also contains the private key**! If you leave the
+> private key in the file, it will be published by your server, completely exposing every single endpoint and allowing
+> arbitrary user spoofing. **READ THE STEPS BELOW CAREFULLY TO AVOID THIS**
 
 1. Go to https://mkjwk.org/
 2. Select "RSA" (should be preselected)
