@@ -1,17 +1,17 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val kotlinVersion = "1.9.21"
-val ktorVersion = "2.3.6"
-val logbackVersion = "1.4.13"
-val kotlinxDatetimeVersion = "0.4.1"
-val skullgameCommonVersion = "1.0.2-SNAPSHOT"
+val kotlinVersion = "1.9.22"
+val ktorVersion = "2.3.8"
+val logbackVersion = "1.4.14"
+val kotlinxDatetimeVersion = "0.5.0"
+val skullgameCommonVersion = "1.0.2"
 
 plugins {
-    kotlin("jvm") version "1.9.21"
-    kotlin("plugin.serialization") version "1.9.21"
-    id("io.ktor.plugin") version "2.3.6"
-    id("io.gitlab.arturbosch.detekt") version "1.23.4"
+    kotlin("jvm") version "1.9.22"
+    kotlin("plugin.serialization") version "1.9.22"
+    id("io.ktor.plugin") version "2.3.8"
+    id("io.gitlab.arturbosch.detekt") version "1.23.5"
 }
 
 group = "com.rtarita"
