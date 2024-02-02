@@ -5,7 +5,7 @@ val kotlinVersion = "1.9.22"
 val ktorVersion = "2.3.8"
 val logbackVersion = "1.4.14"
 val kotlinxDatetimeVersion = "0.5.0"
-val skullgameCommonVersion = "1.0.2"
+val skullgameCommonVersion = "1.0.3-SNAPSHOT"
 
 plugins {
     kotlin("jvm") version "1.9.22"
