@@ -12,6 +12,7 @@ internal object ServerConstants {
     val rsaKeyFactory: KeyFactory = KeyFactory.getInstance("RSA")
 
     const val CONFIG_DIR = "server-config"
+    const val SITE_DIR = "site"
     val configfilePath = Path("$CONFIG_DIR/config.json")
     val privatekeyPath = Path("$CONFIG_DIR/id_rsa")
     val certsPath = Path("$CONFIG_DIR/certs")

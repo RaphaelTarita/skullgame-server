@@ -42,4 +42,7 @@ object ConfigProvider {
 
     val featAutoHeadResponse: Boolean
         get() = deserializedConfig.features.autoHeadResponse
+
+    val featSiteServing: Boolean
+        get() = deserializedConfig.features.siteServing
 }

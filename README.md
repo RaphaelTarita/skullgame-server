@@ -131,7 +131,8 @@ The configuration file for the SkullGame Server has the following structure:
   },
   "features": {
     "reverseProxy": false,
-    "autoHeadResponse": true
+    "autoHeadResponse": true,
+    "siteServing": false
   }
 }
 ```
@@ -158,6 +159,10 @@ Explanation:
   reverse proxy, **set this to `false`**!
 - `features.autoHeadResponse` (default: `true`): Whether the server should automatically answer `HEAD` requests for its
   endpoints
+- `features.siteServing` (default: `false`): Serve a static website alongside your server. The static site will be
+  available without authentication. If set to `true`, the server will look for files in a directory called `site` (at
+  the same location as the `server-config` directory) and statically serve all contents of that directory from the `/`
+  route.
 
 Once you have configured all these settings and put them in `server-config/config.json`, you are ready to run the
 server!
