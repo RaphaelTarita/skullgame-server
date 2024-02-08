@@ -5,7 +5,9 @@ import com.rtarita.skull.common.moves.GameEnded
 import com.rtarita.skull.common.moves.Move
 import com.rtarita.skull.common.moves.MoveOutcome
 import com.rtarita.skull.common.state.GameState
+import com.rtarita.skull.common.state.PlayerGame
 import com.rtarita.skull.common.state.PlayerGameState
+import com.rtarita.skull.common.state.PlayerInfo
 import com.rtarita.skull.common.state.StateSignal
 import com.rtarita.skull.server.ServerConstants
 import com.rtarita.skull.server.config.User
@@ -51,6 +53,17 @@ internal class GameStore {
             cleanup()
             delay(ServerConstants.gameExpirationUpdate)
         }
+    }
+
+    fun gamesOf(user: User): List<PlayerGame> = games.filterValues { it.isPlaying(user) }
+        .map { (gameId, game) ->
+            PlayerGame(gameId, game.isRunning, game.isInitiator(user))
+        }
+
+    fun playersOf(gameid: String, player: User): List<PlayerInfo>? {
+        val game = games[gameid] ?: return null
+        if (!game.isPlaying(player)) return null
+        return game.playerInfo()
     }
 
     suspend fun newGame(initiator: User): String = gamesMutex.withLock {

@@ -85,9 +85,15 @@ internal suspend fun DefaultWebSocketServerSession.handleWebSocketSubscribe(auth
     wsInfo(WsLogType.CONN, "lost connection with '${user.id}'")
 }
 
-internal suspend fun PipelineContext<Unit, ApplicationCall>.handleHello(authStore: AuthStore) {
+internal suspend fun PipelineContext<Unit, ApplicationCall>.handlePlayerHello(authStore: AuthStore) {
     val user = call.receiveUser(authStore) ?: return
     call.respondText("Hello, ${user.displayName}!")
+}
+
+internal suspend fun PipelineContext<Unit, ApplicationCall>.handlePlayerGames(authStore: AuthStore) {
+    val user = call.receiveUser(authStore) ?: return
+    val games = GamesManager.gamesOf(user)
+    call.respond(HttpStatusCode.OK, games)
 }
 
 internal suspend fun PipelineContext<Unit, ApplicationCall>.handleNewgame(authStore: AuthStore) {
@@ -107,6 +113,21 @@ internal suspend fun PipelineContext<Unit, ApplicationCall>.handleJoin(authStore
         )
     } else {
         call.respond(HttpStatusCode.OK, "successfully joined the game")
+    }
+}
+
+internal suspend fun PipelineContext<Unit, ApplicationCall>.handlePlayerinfo(authStore: AuthStore) {
+    val user = call.receiveUser(authStore) ?: return
+    val gameid = call.parameters["gameid"] ?: run {
+        call.respond(HttpStatusCode.BadRequest, "no gameid given")
+        return
+    }
+
+    val playerInfo = GamesManager.playersOf(gameid, user)
+    if (playerInfo != null) {
+        call.respond(HttpStatusCode.OK, playerInfo)
+    } else {
+        call.respond(HttpStatusCode.BadRequest, "user is not a player in the game associated to '$gameid'")
     }
 }
 

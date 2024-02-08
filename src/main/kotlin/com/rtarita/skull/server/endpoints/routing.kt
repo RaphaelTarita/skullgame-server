@@ -9,6 +9,7 @@ import io.ktor.server.http.content.staticFiles
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
+import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import io.ktor.server.websocket.webSocket
 import java.io.File
@@ -31,8 +32,13 @@ private fun Routing.authenticatedRoutes(authStore: AuthStore) = authenticate("au
         handleWebSocketSubscribe(authStore)
     }
 
-    get("/hello") {
-        handleHello(authStore)
+    route("/player") {
+        get("/hello") {
+            handlePlayerHello(authStore)
+        }
+        get("/games") {
+            handlePlayerGames(authStore)
+        }
     }
 
     post("/newgame") {
@@ -41,6 +47,10 @@ private fun Routing.authenticatedRoutes(authStore: AuthStore) = authenticate("au
 
     post("/join/{gameid}") {
         handleJoin(authStore)
+    }
+
+    get("/playerinfo/{gameid}") {
+        handlePlayerinfo(authStore)
     }
 
     post("/startgame/{gameid}") {

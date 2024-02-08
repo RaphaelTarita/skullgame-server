@@ -15,9 +15,11 @@ local maven repository (see 'Building' for more information).
 ### Endpoints
 
 - `/login`: authenticate via JWK and get a token for all the other endpoints
-- `/hello`: validate auth
+- `/player/hello`: validate auth
+- `/player/games`: query which games you have joined
 - `/newgame`: open up a new game room
 - `/join/{gameid}`: join a game room
+- `/gameinfo/{gameid}`: query information about all users in the game room
 - `/startgame/{gameid}`: start a game (if you're the initiator)
 - `/move/{gameid}`: submit a move to a running game
 - `/masterstate/{gameid}`: query the master state of a game (if you're an admin)

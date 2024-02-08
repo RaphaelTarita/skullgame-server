@@ -3,7 +3,9 @@ package com.rtarita.skull.server.core.game
 import com.rtarita.skull.common.moves.Move
 import com.rtarita.skull.common.moves.MoveOutcome
 import com.rtarita.skull.common.state.GameState
+import com.rtarita.skull.common.state.PlayerGame
 import com.rtarita.skull.common.state.PlayerGameState
+import com.rtarita.skull.common.state.PlayerInfo
 import com.rtarita.skull.common.state.StateSignal
 import com.rtarita.skull.server.config.ConfigProvider
 import com.rtarita.skull.server.config.User
@@ -34,6 +36,10 @@ internal object GamesManager {
         coroutineScope.cancel()
         threadpool.shutdown()
     }
+
+    fun gamesOf(user: User): List<PlayerGame> = GlobalState.gameStore.gamesOf(user)
+
+    fun playersOf(gameid: String, user: User): List<PlayerInfo>? = GlobalState.gameStore.playersOf(gameid, user)
 
     suspend fun newGame(initiator: User): String = GlobalState.gameStore.newGame(initiator)
 

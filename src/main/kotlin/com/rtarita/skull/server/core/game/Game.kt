@@ -1,5 +1,6 @@
 package com.rtarita.skull.server.core.game
 
+import com.rtarita.skull.common.state.PlayerInfo
 import com.rtarita.skull.server.config.User
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -14,7 +15,8 @@ internal class Game(
     private val players = ConcurrentHashMap<User, Int>()
     val mutex = Mutex()
     var lastInteraction: Instant = Clock.System.now()
-    private var isRunning = false
+    var isRunning = false
+        private set
     private var playerCount = 0
 
     init {
@@ -34,6 +36,12 @@ internal class Game(
             true
         }
     }.also { updateLastInteraction() }
+
+    fun isPlaying(player: User) = players.containsKey(player)
+
+    fun playerInfo() = players.map { (user, playerIndex) ->
+        PlayerInfo(user.id, user.displayName, isInitiator(user), playerIndex)
+    }
 
     fun isInitiator(player: User): Boolean = players[player] == 0
 
