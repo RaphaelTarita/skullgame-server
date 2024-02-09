@@ -7,7 +7,6 @@ import com.rtarita.skull.common.condition.dsl.until
 import com.rtarita.skull.common.condition.rendezvousSignalCondition
 import com.rtarita.skull.common.state.StateSignal
 import com.rtarita.skull.server.config.User
-import com.rtarita.skull.server.core.game.GamesManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.flow
@@ -32,7 +31,7 @@ internal object StateSignalBroker {
     }
 
     private fun addRegistration(key: RegistryKey): Flow<StateSignal.Server>? {
-        val signalFlow = registeredUsers.getOrPut(key) { GamesManager.getSignalFlow(key.gameid) ?: return null }
+        val signalFlow = registeredUsers.getOrPut(key) { GlobalState.gameStore.getSignalFlow(key.gameid) ?: return null }
         closeTokens[key] = rendezvousSignalCondition()
         val closerFlow = conditionFlow(key) ?: return null
         return merge(signalFlow, closerFlow).transformWhile {

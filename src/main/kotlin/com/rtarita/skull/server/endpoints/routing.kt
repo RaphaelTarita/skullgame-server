@@ -3,6 +3,17 @@ package com.rtarita.skull.server.endpoints
 import com.rtarita.skull.server.ServerConstants
 import com.rtarita.skull.server.auth.AuthStore
 import com.rtarita.skull.server.config.ConfigProvider
+import com.rtarita.skull.server.endpoints.handling.handleJoin
+import com.rtarita.skull.server.endpoints.handling.handleLogin
+import com.rtarita.skull.server.endpoints.handling.handleMasterstate
+import com.rtarita.skull.server.endpoints.handling.handleMove
+import com.rtarita.skull.server.endpoints.handling.handleNewgame
+import com.rtarita.skull.server.endpoints.handling.handlePlayerGames
+import com.rtarita.skull.server.endpoints.handling.handlePlayerHello
+import com.rtarita.skull.server.endpoints.handling.handlePlayerinfo
+import com.rtarita.skull.server.endpoints.handling.handleStartgame
+import com.rtarita.skull.server.endpoints.handling.handleState
+import com.rtarita.skull.server.endpoints.handling.handleWebSocketSubscribe
 import io.ktor.server.application.Application
 import io.ktor.server.auth.authenticate
 import io.ktor.server.http.content.staticFiles
