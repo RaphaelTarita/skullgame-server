@@ -1,15 +1,15 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val kotlinVersion = "1.9.24"
+val kotlinVersion = "2.0.0"
 val ktorVersion = "2.3.11"
 val logbackVersion = "1.5.6"
 val kotlinxDatetimeVersion = "0.6.0"
 val skullgameCommonVersion = "1.0.3-SNAPSHOT"
 
 plugins {
-    kotlin("jvm") version "1.9.24"
-    kotlin("plugin.serialization") version "1.9.24"
+    kotlin("jvm") version "2.0.0"
+    kotlin("plugin.serialization") version "2.0.0"
     id("io.ktor.plugin") version "2.3.11"
     id("io.gitlab.arturbosch.detekt") version "1.23.6"
 }
