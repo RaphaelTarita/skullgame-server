@@ -26,8 +26,10 @@ object LayHandler : MoveHandler<Lay> {
 
     override fun handle(state: GameState, playerIndex: Int, move: Lay, random: Random): Pair<GameState, MoveOutcome> {
         val (cardsInHand, cardsOnTable) = layCard(state.cardsInHand, state.cardsOnTable, playerIndex, move.card)
+        val newTurn = advanceTurn(state.currentTurn, state.numPlayers, state.cardsAvailable)
         val newState = state.copy(
-            currentTurn = advanceTurn(state.currentTurn, state.numPlayers, state.cardsAvailable),
+            currentTurn = newTurn,
+            currentTurnMode = if (state.cardsInHand.getValue(newTurn).isEmpty()) TurnMode.BID else TurnMode.LAY,
             cardsInHand = cardsInHand,
             cardsOnTable = cardsOnTable
         )
