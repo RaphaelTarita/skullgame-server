@@ -6,31 +6,29 @@ import com.rtarita.skull.server.auth.AuthStore
 import com.rtarita.skull.server.auth.receiveUser
 import com.rtarita.skull.server.core.state.GlobalState
 import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.ApplicationCall
-import io.ktor.server.application.call
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondText
-import io.ktor.util.pipeline.PipelineContext
+import io.ktor.server.routing.RoutingContext
 
-internal suspend fun PipelineContext<Unit, ApplicationCall>.handlePlayerHello(authStore: AuthStore) {
+internal suspend fun RoutingContext.handlePlayerHello(authStore: AuthStore) {
     val user = call.receiveUser(authStore) ?: return
     call.respondText("Hello, ${user.displayName}!")
 }
 
-internal suspend fun PipelineContext<Unit, ApplicationCall>.handlePlayerGames(authStore: AuthStore) {
+internal suspend fun RoutingContext.handlePlayerGames(authStore: AuthStore) {
     val user = call.receiveUser(authStore) ?: return
     val games = GlobalState.gameStore.gamesOf(user)
     call.respond(HttpStatusCode.OK, games)
 }
 
-internal suspend fun PipelineContext<Unit, ApplicationCall>.handleNewgame(authStore: AuthStore) {
+internal suspend fun RoutingContext.handleNewgame(authStore: AuthStore) {
     val user = call.receiveUser(authStore) ?: return
     val gameid = GlobalState.gameStore.newGame(user)
     call.respond(HttpStatusCode.Created, hashMapOf("gameid" to gameid))
 }
 
-internal suspend fun PipelineContext<Unit, ApplicationCall>.handleJoin(authStore: AuthStore) {
+internal suspend fun RoutingContext.handleJoin(authStore: AuthStore) {
     val user = call.receiveUser(authStore) ?: return
     val gameid = call.parameters["gameid"]
 
@@ -44,7 +42,7 @@ internal suspend fun PipelineContext<Unit, ApplicationCall>.handleJoin(authStore
     }
 }
 
-internal suspend fun PipelineContext<Unit, ApplicationCall>.handlePlayerinfo(authStore: AuthStore) {
+internal suspend fun RoutingContext.handlePlayerinfo(authStore: AuthStore) {
     val user = call.receiveUser(authStore) ?: return
     val gameid = call.parameters["gameid"] ?: run {
         call.respond(HttpStatusCode.BadRequest, "no gameid given")
@@ -59,7 +57,7 @@ internal suspend fun PipelineContext<Unit, ApplicationCall>.handlePlayerinfo(aut
     }
 }
 
-internal suspend fun PipelineContext<Unit, ApplicationCall>.handleStartgame(authStore: AuthStore) {
+internal suspend fun RoutingContext.handleStartgame(authStore: AuthStore) {
     val user = call.receiveUser(authStore) ?: return
     val gameid = call.parameters["gameid"]
 
@@ -70,7 +68,7 @@ internal suspend fun PipelineContext<Unit, ApplicationCall>.handleStartgame(auth
     }
 }
 
-internal suspend fun PipelineContext<Unit, ApplicationCall>.handleMove(authStore: AuthStore) {
+internal suspend fun RoutingContext.handleMove(authStore: AuthStore) {
     val user = call.receiveUser(authStore) ?: return
     val gameid = call.parameters["gameid"] ?: run {
         call.respond(HttpStatusCode.BadRequest, "no gameid given")
@@ -84,7 +82,7 @@ internal suspend fun PipelineContext<Unit, ApplicationCall>.handleMove(authStore
     }
 }
 
-internal suspend fun PipelineContext<Unit, ApplicationCall>.handleMasterstate(authStore: AuthStore) {
+internal suspend fun RoutingContext.handleMasterstate(authStore: AuthStore) {
     val user = call.receiveUser(authStore) ?: return
     if (!user.isAdmin) {
         call.respond(HttpStatusCode.Unauthorized, "cannot query master game state if not admin")
@@ -104,7 +102,7 @@ internal suspend fun PipelineContext<Unit, ApplicationCall>.handleMasterstate(au
     }
 }
 
-internal suspend fun PipelineContext<Unit, ApplicationCall>.handleState(authStore: AuthStore) {
+internal suspend fun RoutingContext.handleState(authStore: AuthStore) {
     val user = call.receiveUser(authStore) ?: return
     val gameid = call.parameters["gameid"] ?: run {
         call.respond(HttpStatusCode.BadRequest, "no gameid given")

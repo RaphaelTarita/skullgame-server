@@ -8,17 +8,15 @@ import com.rtarita.skull.common.auth.TokenHolder
 import com.rtarita.skull.server.ServerConstants
 import com.rtarita.skull.server.auth.AuthStore
 import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.ApplicationCall
-import io.ktor.server.application.call
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
-import io.ktor.util.pipeline.PipelineContext
+import io.ktor.server.routing.RoutingContext
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import java.security.spec.PKCS8EncodedKeySpec
 import java.time.Instant
 
-internal suspend fun PipelineContext<Unit, ApplicationCall>.handleLogin(authStore: AuthStore) {
+internal suspend fun RoutingContext.handleLogin(authStore: AuthStore) {
     val cred = call.receive<LoginCredentials>()
     val user = authStore.authMap[cred.id to cred.passHash] ?: run {
         call.respond(HttpStatusCode.Unauthorized, "username or password wrong")

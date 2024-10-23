@@ -18,6 +18,7 @@ private enum class WsLogType {
 }
 
 private fun DefaultWebSocketServerSession.wsInfo(type: WsLogType, msg: String) = call.application.log.info("WS $type - $msg")
+
 internal suspend fun DefaultWebSocketServerSession.handleWebSocketSubscribe(authStore: AuthStore) {
     val user = call.receiveUser(authStore) ?: return
     wsInfo(WsLogType.CONN, "established connection with '${user.id}'")

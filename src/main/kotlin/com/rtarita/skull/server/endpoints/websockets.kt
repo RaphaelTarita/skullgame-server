@@ -6,12 +6,11 @@ import io.ktor.server.application.install
 import io.ktor.server.websocket.WebSockets
 import io.ktor.server.websocket.pingPeriod
 import io.ktor.server.websocket.timeout
-import java.time.Duration
 
 internal fun Application.initWebSockets() {
     install(WebSockets) {
-        pingPeriod = Duration.ofSeconds(CommonConstants.WEBSOCKET_PING_PERIOD_SECONDS)
-        timeout = Duration.ofSeconds(CommonConstants.WEBSOCKET_TIMEOUT_SECONDS)
+        pingPeriod = CommonConstants.WEBSOCKET_PING_PERIOD
+        timeout = CommonConstants.WEBSOCKET_TIMEOUT
         maxFrameSize = CommonConstants.WEBSOCKET_MAX_FRAME_SIZE
         masking = true
     }
